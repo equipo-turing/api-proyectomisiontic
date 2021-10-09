@@ -37,7 +37,7 @@ rutasVendedor.route('/vendedores/:id').patch((req, res) => {
 });
 
 rutasVendedor.route('/vendedores/:id').delete((req, res) => {
-  eliminarVenta(req.params.id, genercCallback(res));
+    eliminarVendedor(req.params.id, genercCallback(res));
 });
 
 export default rutasVendedor;
