@@ -29,7 +29,7 @@ rutasVendedor.route('/vendedores').post((req, res) => {
 
 rutasVendedor.route('/vendedores/:id').get((req, res) => {
   console.log('alguien hizo get en la ruta /vendedores');
-  consultarVenta(req.params.id, genercCallback(res));
+  consultarVendedor(req.params.id, genercCallback(res));
 });
 
 rutasVendedor.route('/vendedores/:id').patch((req, res) => {
