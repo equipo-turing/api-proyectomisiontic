@@ -1,11 +1,11 @@
 import Express from 'express';
 
 import {
-    queryTodosVendedores,
-    crearVendedor,
-    consultarVendedor, 
-    editarVendedor,
-    eliminarVendedor 
+  queryTodosVendedores,
+  crearVendedor,
+  consultarVendedor, 
+  editarVendedor,
+  eliminarVendedor 
 } from '../../controllers/vendedores/controller.js';
 
 const rutasVendedor = Express.Router();
