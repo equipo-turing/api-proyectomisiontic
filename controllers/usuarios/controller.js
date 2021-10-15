@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { getDB } from '../../db/db.js';
+import jwt_decode from 'jwt-decode';
 
 const queryTodosUsuarios = async (callback) => {
   const baseDeDatos = getDB();
@@ -8,16 +9,10 @@ const queryTodosUsuarios = async (callback) => {
 };
 
 const crearUsuario = async (datosUsuario, callback) => {
-    if (
-        Object.keys(datosUsuario).includes('identificacion') &&
-        Object.keys(datosUsuario).includes('nombre') &&
-        Object.keys(datosUsuario).includes('rol') 
-      ) {
-        const baseDeDatos = getDB();
-        await baseDeDatos.collection('usuario').insertOne(datosUsuario, callback);
-      } else {
-        return 'error';
-    }
+
+  const baseDeDatos = getDB();
+  await baseDeDatos.collection('usuario').insertOne(datosUsuario, callback);
+
 };
 
 const consultarUsuario = async (id, callback) => {
@@ -42,4 +37,30 @@ const eliminarUsuario = async (id, callback) => {
   await baseDeDatos.collection('usuario').deleteOne(filtroUsuario, callback);
 };
 
-export { queryTodosUsuarios, crearUsuario, consultarUsuario, editarUsuario, eliminarUsuario };
+
+const consultarOCrearUsuario = async (req, callback) => {
+  // 6.1. obtener los datos del usuario desde el token
+  const token = req.headers.authorization.split('Bearer ')[1];
+  const user = jwt_decode(token)['http://localhost/userData'];
+  console.log(user);
+
+  // 6.2. con el correo del usuario o con el id de auth0, verificar si el usuario ya esta en la bd o no
+  const baseDeDatos = getDB();
+  console.log("hola mundi")
+  await baseDeDatos.collection('usuario').findOne({ email: user.email }, async (err, response) => {
+    console.log('response consulta bd', response);
+    if (response) {
+      // 7.1. si el usuario ya esta en la BD, devuelve la info del usuario
+      callback(err, response);
+    } else {
+      console.log("ENTRE ACA BRO")
+      // 7.2. si el usuario no esta en la bd, lo crea y devuelve la info
+      user.auth0ID = user._id;
+      delete user._id;
+      user.rol = 'inactivo';
+      await crearUsuario(user, (err, respuesta) => callback(err, user));
+    }
+  });
+};
+
+export { queryTodosUsuarios, crearUsuario, consultarUsuario, editarUsuario, eliminarUsuario ,consultarOCrearUsuario};

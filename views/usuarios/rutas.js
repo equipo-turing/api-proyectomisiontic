@@ -5,7 +5,8 @@ import {
     crearUsuario,
     consultarUsuario, 
     editarUsuario,
-    eliminarUsuario 
+    eliminarUsuario,
+    consultarOCrearUsuario
 } from '../../controllers/usuarios/controller.js';
 
 const rutasUsuario = Express.Router();
@@ -19,7 +20,7 @@ const genercCallback = (res) => (err, result) => {
 };
 
 rutasUsuario.route('/usuarios').get((req, res) => {
-  console.log('alguien hizo get en la ruta /usuarios');
+  console.log('alguien hizo get en la ruta de todos los usuarios');
   queryTodosUsuarios(genercCallback(res));
 });
 
@@ -27,8 +28,13 @@ rutasUsuario.route('/usuarios').post((req, res) => {
     crearUsuario(req.body, genercCallback(res));
 });
 
+rutasUsuario.route('/usuarios/self').get((req, res) => {
+  console.log('alguien hizo get en la ruta /self');
+  consultarOCrearUsuario(req, genercCallback(res));
+  // consultarUsuario(, genercCallback(res));
+});
 rutasUsuario.route('/usuarios/:id').get((req, res) => {
-  console.log('alguien hizo get en la ruta /usuarios');
+  console.log('alguien hizo get en la ruta /usuarios individual');
   consultarUsuario(req.params.id, genercCallback(res));
 });
 
