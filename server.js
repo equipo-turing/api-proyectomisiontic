@@ -40,7 +40,7 @@ app.use(rutasUsuario);
 app.use(rutasProducto);
 
 const main = () => {
-  return app.listen(pport, () => {
+  return app.listen(port, () => {
     console.log(`escuchando puerto ${port}`);
   });
 };
