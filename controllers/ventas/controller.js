@@ -33,4 +33,18 @@ const eliminarVenta = async (id, callback) => {
   await baseDeDatos.collection('venta').deleteOne(filtroProducto, callback);
 };
 
-export {crearVenta,obtenerVentas,eliminarVenta};
+
+const editarVenta = async (venta,callback) => {
+  const edicion = venta;
+  const filtroEdicion={ _id:new ObjectId(edicion.id)};
+  delete edicion.id;
+  const operacion={
+      $set:edicion,
+  }
+  const baseDeDatos = getDB();
+  await baseDeDatos
+    .collection('venta')
+    .findOneAndUpdate(filtroEdicion, operacion, { upsert: true, returnOriginal: true }, callback);
+};
+
+export {crearVenta,obtenerVentas,eliminarVenta,editarVenta};
