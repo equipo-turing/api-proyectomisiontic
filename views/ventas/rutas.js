@@ -3,7 +3,8 @@ import Express from 'express';
 import {
     crearVenta,
     obtenerVentas,
-    eliminarVenta
+    eliminarVenta,
+    editarVenta
  } from '../../controllers/ventas/controller.js';
 
 const rutasVenta = Express.Router();
@@ -27,6 +28,10 @@ rutasVenta.route('/venta').get((req, res) => {
 
 rutasVenta.route('/ventaeliminar').delete((req, res) => {
   eliminarVenta(req.body.id, genercCallback(res));
+});
+
+rutasVenta.route('/ventaeditar').patch((req, res) => {
+  editarVenta(req.body, genercCallback(res));
 });
 
 export default rutasVenta;
