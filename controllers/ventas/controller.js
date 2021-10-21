@@ -20,10 +20,17 @@ const crearVenta = async (nuevaVenta, callback) => {
     }
 };
 
-const queryTodasVentas = async (callback) => {
+const obtenerVentas = async (callback) => {
     const baseDeDatos = getDB();
     console.log('query');
     await baseDeDatos.collection('venta').find({}).limit(50).toArray(callback);
 };
 
-export {crearVenta,queryTodasVentas};
+
+const eliminarVenta = async (id, callback) => {
+  const filtroProducto = { _id: new ObjectId(id) };
+  const baseDeDatos = getDB();
+  await baseDeDatos.collection('venta').deleteOne(filtroProducto, callback);
+};
+
+export {crearVenta,obtenerVentas,eliminarVenta};

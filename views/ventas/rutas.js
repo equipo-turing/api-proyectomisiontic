@@ -2,7 +2,8 @@ import Express from 'express';
 
 import {
     crearVenta,
-    queryTodasVentas
+    obtenerVentas,
+    eliminarVenta
  } from '../../controllers/ventas/controller.js';
 
 const rutasVenta = Express.Router();
@@ -21,7 +22,11 @@ rutasVenta.route('/ventanueva').post((req, res) => {
 
 rutasVenta.route('/venta').get((req, res) => {
     console.log('alguien hizo get en la ruta /venta');
-    queryTodasVentas(genercCallback(res));
+    obtenerVentas(genercCallback(res));
+});
+
+rutasVenta.route('/ventaeliminar').delete((req, res) => {
+  eliminarVenta(req.body.id, genercCallback(res));
 });
 
 export default rutasVenta;
