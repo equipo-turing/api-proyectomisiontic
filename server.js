@@ -11,6 +11,7 @@ import jwks from 'jwks-rsa';
 import rutasVendedor from './views/vendedores/rutas.js';
 import rutasUsuario from './views/usuarios/rutas.js';
 import rutasProducto from './views/producto/rutas.js';
+import rutasVenta from './views/ventas/rutas.js';
 import autorizacionEstadoUsuario from './middleware/autorizacionEstadoUsuario.js';
 
 dotenv.config({ path: './.env' });
@@ -32,12 +33,13 @@ audience: 'api-turing-mintic',
 issuer: 'https://turing-misiontic.us.auth0.com/',
 algorithms: ['RS256']
 });
-app.use(jwtCheck);
-app.use(autorizacionEstadoUsuario);
+//app.use(jwtCheck);
+//app.use(autorizacionEstadoUsuario);
 
 app.use(rutasVendedor);
 app.use(rutasUsuario);
 app.use(rutasProducto);
+app.use(rutasVenta);
 
 const main = () => {
   return app.listen(port, () => {
