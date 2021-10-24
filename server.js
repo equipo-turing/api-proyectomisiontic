@@ -33,8 +33,8 @@ audience: 'api-turing-mintic',
 issuer: 'https://turing-misiontic.us.auth0.com/',
 algorithms: ['RS256']
 });
-//app.use(jwtCheck);
-//app.use(autorizacionEstadoUsuario);
+app.use(jwtCheck);
+app.use(autorizacionEstadoUsuario);
 
 app.use(rutasVendedor);
 app.use(rutasUsuario);
